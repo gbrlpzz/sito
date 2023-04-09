@@ -16,8 +16,17 @@ a:hover {
 .console {
     font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
     color: #ffffff;
+    max-width: 800px; /* Set the max-width for the console */
+    width: 100%; /* Set the width to 100% to adapt to the screen size */
+    margin: 0 auto; /* Center the console div */
 }
 input[type="button"] {
     cursor: pointer;
 }
 
+/* Media query for smartphones */
+@media screen and (max-width: 768px) {
+    html {
+        font-size: 18px; /* Adjust the font size for smartphones */
+    }
+}
