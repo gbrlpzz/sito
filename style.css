@@ -25,8 +25,8 @@ input[type="button"] {
 }
 
 /* Media query for smartphones */
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 480px) {
     html {
-        font-size: 18px; /* Adjust the font size for smartphones */
+        font-size: 18em; /* Adjust the font size for smartphones */
     }
 }
