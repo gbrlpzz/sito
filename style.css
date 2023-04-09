@@ -21,3 +21,9 @@ input[type="button"] {
     cursor: pointer;
 }
 
+/* Media query for smartphones */
+@media screen and (max-width: 480px) {
+    body {
+        font-size: 18px; /* Adjust the font size for smartphones */
+    }
+}
