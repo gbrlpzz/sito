@@ -1,10 +1,27 @@
 body {
     background-color: #000000;
-    padding: 1%;
+    padding: 0;
+    margin: 0;
     color: #ccc;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1em;
 }
+
+.container {
+    padding: 1rem;
+    box-sizing: border-box;
+    height: 100vh;
+    width: 100vw;
+}
+
+.console {
+    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
+    color: #ffffff;
+    max-width: 800px;
+    width: 100%;
+    margin: 0;
+}
+
 
 a {
     color: #ffffff;
@@ -16,6 +33,8 @@ a:hover {
     text-decoration: underline;
 }
 
+<<<<<<< HEAD
+=======
 .console {
     font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
     color: #ffffff;
@@ -28,6 +47,7 @@ a:hover {
     width: 100vw;
 }
 
+>>>>>>> 064a2c132a71550f193b39683156384a138fa057
 input[type="button"] {
     cursor: pointer;
 }
