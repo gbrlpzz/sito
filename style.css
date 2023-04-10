@@ -33,21 +33,6 @@ a:hover {
     text-decoration: underline;
 }
 
-<<<<<<< HEAD
-=======
-.console {
-    font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
-    color: #ffffff;
-    max-width: 800px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1rem;
-    box-sizing: border-box;
-    height: 100vh;
-    width: 100vw;
-}
-
->>>>>>> 064a2c132a71550f193b39683156384a138fa057
 input[type="button"] {
     cursor: pointer;
 }
