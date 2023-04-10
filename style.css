@@ -5,28 +5,53 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1em;
 }
+
 a {
     color: #ffffff;
     text-decoration: underline;
 }
+
 a:hover {
     color: #1DA1F2;
     text-decoration: underline;
 }
+
 .console {
     font-family: "Lucida Sans Typewriter", "Lucida Console", Monaco, "Bitstream Vera Sans Mono", monospace;
     color: #ffffff;
-    max-width: 800px; /* Set the max-width for the console */
-    width: 100%; /* Set the width to 100% to adapt to the screen size */
-    margin: 0 auto; /* Center the console div */
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
 }
+
 input[type="button"] {
     cursor: pointer;
 }
 
-/* Media query for smartphones */
+html {
+    font-size: 16px;
+}
+
 @media screen and (max-width: 480px) {
     html {
-        font-size: 18em; /* Adjust the font size for smartphones */
+        font-size: 14px;
+    }
+}
+
+@media screen and (min-width: 481px) and (max-width: 768px) {
+    html {
+        font-size: 15px;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+@media screen and (min-width: 1025px) {
+    html {
+        font-size: 18px;
     }
 }
