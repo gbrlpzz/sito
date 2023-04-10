@@ -5,13 +5,16 @@ body {
     color: #ccc;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 1em;
+    height: 100vh;
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
 }
 
 .container {
     padding: 1rem;
     box-sizing: border-box;
-    height: 100vh;
-    width: 100vw;
+    width: 100%;
 }
 
 .console {
