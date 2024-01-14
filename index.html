@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Responsive Accordion Layout</title>
+	<style>
+		body {
+			font-family: 'Avenir', Arial, sans-serif;
+			margin: 40px;
+			/* Corrected margin syntax */
+			padding: 0;
+			box-sizing: border-box;
+			line-height: 1.6;
+			color: #333;
+		}
+
+		.accordion {
+			display: flex;
+			flex-direction: column;
+			width: 100%;
+			margin: auto;
+			padding: 20px 10px;
+			/* Reduced side padding for mobile */
+		}
+
+		.accordion-item {
+			margin-bottom: 5px;
+			/* Reduced space between titles */
+		}
+
+		.accordion-title,
+		.accordion-content {
+			font-size: 16px;
+			/* Font size for larger screens, will adjust for mobile */
+		}
+
+		.accordion-title {
+			font-weight: bold;
+			color: black;
+			cursor: pointer;
+			padding: 5px 0;
+			/* Reduced padding to bring titles closer */
+			margin: 0;
+			border: none;
+			text-align: left;
+			background: none;
+			outline: none;
+			line-height: 1.5;
+			/* Line spacing as requested */
+		}
+
+		.accordion-content {
+			padding: 10px 0;
+			background-color: white;
+			display: none;
+			overflow: hidden;
+		}
+
+		.accordion-content img {
+			max-width: 100%;
+			height: auto;
+		}
+
+		.accordion-content a {
+			color: rgba(0, 0, 0);
+			text-decoration: underline;
+			margin: 5px 0px;
+		}
+
+		/* Responsive adjustments */
+		@media (max-width: 600px) {
+			.accordion {
+				padding: 10px 5px;
+				/* Even smaller padding for very small screens */
+			}
+
+			.accordion-title,
+			.accordion-content {
+				font-size: 14px;
+				/* Smaller font size for mobile */
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<div class="accordion">
+		<div class="accordion-item">
+			<h2 class="accordion-title" data-article="/article1.html">Gabriele Pizzi</h2>
+			<div class="accordion-content"></div>
+		</div>
+		<div class="accordion-item">
+			<h2 class="accordion-title" data-article="/article2.html">Article Title 2</h2>
+			<div class="accordion-content"></div>
+		</div>
+		<div class="accordion-item">
+			<h2 class="accordion-title" data-article="/article2.html">Article Title 3</h2>
+			<div class="accordion-content"></div>
+		</div>
+		<!-- Repeat for other articles, changing data-article attribute -->
+	</div>
+	<!-- Your existing JavaScript, plus the new function for loading articles -->
+	<script>
+		document.querySelectorAll('.accordion-title').forEach(title => {
+			title.addEventListener('click', () => {
+				const accordionContent = title.nextElementSibling;
+
+				// Load article content if not already loaded
+				if (!accordionContent.innerHTML.trim()) {
+					fetch(title.getAttribute('data-article'))
+						.then(response => response.text())
+						.then(data => {
+							accordionContent.innerHTML = data;
+							accordionContent.style.display = 'block';
+						})
+						.catch(error => {
+							console.error('Error loading article:', error);
+							accordionContent.innerHTML = '<p>Article could not be loaded.</p>';
+							accordionContent.style.display = 'block';
+						});
+				} else {
+					accordionContent.style.display = accordionContent.style.display === 'block' ? 'none' : 'block';
+				}
+
+				// Close other open items
+				document.querySelectorAll('.accordion-content').forEach(item => {
+					if (item !== accordionContent) {
+						item.style.display = 'none';
+					}
+				});
+			});
+		});
+	</script>
+</body>
+
+</html>
