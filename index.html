@@ -145,59 +145,57 @@
 	</div>
 	<!-- Your existing JavaScript, plus the new function for loading articles -->
 	<script>
-			document.querySelectorAll('.accordion-title').forEach(title => {
-				title.addEventListener('click', () => {
-					const accordionContent = title.nextElementSibling;
-					const articleId = title.parentElement.getAttribute('id');
+		document.querySelectorAll('.accordion-title').forEach(title => {
+			title.addEventListener('click', () => {
+				const accordionContent = title.nextElementSibling;
 
-					// Toggle the clicked item and scroll it into view
-					if (accordionContent.style.display === 'block') {
-						accordionContent.style.display = 'none';
-						// Remove the hash from the URL when an article is closed
-						history.pushState("", document.title, window.location.pathname + window.location.search);
-					} else {
-						// Load article content if not already loaded
-						if (!accordionContent.innerHTML.trim()) {
-							fetch(title.getAttribute('data-article'))
-								.then(response => response.text())
-								.then(data => {
-									accordionContent.innerHTML = data;
-									accordionContent.style.display = 'block';
-									title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-									// Update the URL hash when an article is opened
-									window.location.hash = articleId;
-								})
-								.catch(error => {
-									console.error('Error loading article:', error);
-									accordionContent.innerHTML = '<p>Article could not be loaded.</p>';
-								});
-						} else {
-							accordionContent.style.display = 'block';
-							title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-							// Update the URL hash when an article is opened
-							window.location.hash = articleId;
-						}
-					}
-
-					// Close other open items
-					document.querySelectorAll('.accordion-content').forEach(item => {
-						if (item !== accordionContent) {
-							item.style.display = 'none';
-						}
-					});
-				});
-			});
-
-			// Open the article corresponding to the URL hash when the page loads
-			window.addEventListener('DOMContentLoaded', () => {
-				const hash = window.location.hash.substring(1);
-				if (hash) {
-					const title = document.querySelector(`#${hash} > .accordion-title`);
-					if (title) {
-						title.click();
-					}
+				// Load article content if not already loaded
+				if (!accordionContent.innerHTML.trim()) {
+					fetch(title.getAttribute('data-article'))
+						.then(response => response.text())
+						.then(data => {
+							accordionContent.innerHTML = data;
+							toggleContentDisplay(accordionContent, title);
+						})
+						.catch(error => {
+							console.error('Error loading article:', error);
+							accordionContent.innerHTML = '<p>Article could not be loaded.</p>';
+							toggleContentDisplay(accordionContent, title);
+						});
+				} else {
+					toggleContentDisplay(accordionContent, title);
 				}
 			});
+		});
+
+		function toggleContentDisplay(content, title) {
+			if (content.style.display === 'block') {
+				content.style.display = 'none';
+				history.pushState("", document.title, window.location.pathname + window.location.search);
+			} else {
+				content.style.display = 'block';
+				title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+				window.location.hash = title.parentElement.getAttribute('id');
+			}
+
+			// Close other open items
+			document.querySelectorAll('.accordion-content').forEach(item => {
+				if (item !== content) {
+					item.style.display = 'none';
+				}
+			});
+		}
+
+		// Open the article corresponding to the URL hash when the page loads
+		window.addEventListener('DOMContentLoaded', () => {
+			const hash = window.location.hash.substring(1);
+			if (hash) {
+				const title = document.querySelector(`#${hash} > .accordion-title`);
+				if (title) {
+					title.click();
+				}
+			}
+		});
 	</script>
 </body>
 
