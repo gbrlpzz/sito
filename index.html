@@ -146,9 +146,38 @@
 	<!-- Your existing JavaScript, plus the new function for loading articles -->
 	<script>
 			document.querySelectorAll('.accordion-title').forEach(title => {
-				title.addEventListener('click', () => {
+			title.addEventListener('click', () => {
 				const accordionContent = title.nextElementSibling;
 				const articleId = title.parentElement.getAttribute('id');
+
+				// Load article content if not already loaded
+				if (!accordionContent.innerHTML.trim()) {
+					fetch(title.getAttribute('data-article'))
+						.then(response => response.text())
+						.then(data => {
+							accordionContent.innerHTML = data;
+							accordionContent.style.display = 'block';
+							title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+							// Update the URL hash when an article is opened
+							window.location.hash = articleId;
+						})
+						.catch(error => {
+							console.error('Error loading article:', error);
+							accordionContent.innerHTML = '<p>Article could not be loaded.</p>';
+						});
+				} else {
+					// Toggle the clicked item and scroll it into view
+					if (accordionContent.style.display === 'block') {
+						accordionContent.style.display = 'none';
+						// Remove the hash from the URL when an article is closed
+						history.pushState("", document.title, window.location.pathname + window.location.search);
+					} else {
+						accordionContent.style.display = 'block';
+						title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+						// Update the URL hash when an article is opened
+						window.location.hash = articleId;
+					}
+				}
 
 				// Close other open items
 				document.querySelectorAll('.accordion-content').forEach(item => {
@@ -156,18 +185,6 @@
 						item.style.display = 'none';
 					}
 				});
-
-				// Toggle the clicked item and scroll it into view
-				if (accordionContent.style.display === 'block') {
-					accordionContent.style.display = 'none';
-					// Remove the hash from the URL when an article is closed
-					history.pushState("", document.title, window.location.pathname + window.location.search);
-				} else {
-					accordionContent.style.display = 'block';
-					title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-					// Update the URL hash when an article is opened
-					window.location.hash = articleId;
-				}
 			});
 		});
 
@@ -181,7 +198,6 @@
 				}
 			}
 		});
-
 	</script>
 </body>
 
