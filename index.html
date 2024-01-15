@@ -124,19 +124,19 @@
 	<div class="accordion">
 
 		<!--Bio-->
-		<div class="accordion-item">
+		<div class="accordion-item" id="gabriele">
 			<h2 class="accordion-title" data-article="articles/article1/article1.html">Gabriele Pizzi</h2>
 			<div class="accordion-content"></div>
 		</div>
 
 		<!--Library-->
-		<div class="accordion-item">
+		<div class="accordion-item" id="library">
 			<h2 class="accordion-title" data-article="articles/resources/resources.html">Library of Digital Essentials</h2>
 			<div class="accordion-content"></div>
 		</div>
 
 		<!--Article: The Value of Space is What you do With It-->
-		<div class="accordion-item">
+		<div class="accordion-item" id="space">
 			<h2 class="accordion-title" data-article="articles/space/space.html">The Value of Space is What You do With It</h2>
 			<div class="accordion-content"></div>
 		</div>
@@ -145,26 +145,10 @@
 	</div>
 	<!-- Your existing JavaScript, plus the new function for loading articles -->
 	<script>
-		document.querySelectorAll('.accordion-title').forEach(title => {
-			title.addEventListener('click', () => {
+			document.querySelectorAll('.accordion-title').forEach(title => {
+				title.addEventListener('click', () => {
 				const accordionContent = title.nextElementSibling;
-
-				// Load article content if not already loaded
-				if (!accordionContent.innerHTML.trim()) {
-					fetch(title.getAttribute('data-article'))
-						.then(response => response.text())
-						.then(data => {
-							accordionContent.innerHTML = data;
-							accordionContent.style.display = 'block';
-						})
-						.catch(error => {
-							console.error('Error loading article:', error);
-							accordionContent.innerHTML = '<p>Article could not be loaded.</p>';
-							accordionContent.style.display = 'block';
-						});
-				} else {
-					accordionContent.style.display = accordionContent.style.display === 'block' ? 'none' : 'block';
-				}
+				const articleId = title.parentElement.getAttribute('id');
 
 				// Close other open items
 				document.querySelectorAll('.accordion-content').forEach(item => {
@@ -172,8 +156,32 @@
 						item.style.display = 'none';
 					}
 				});
+
+				// Toggle the clicked item and scroll it into view
+				if (accordionContent.style.display === 'block') {
+					accordionContent.style.display = 'none';
+					// Remove the hash from the URL when an article is closed
+					history.pushState("", document.title, window.location.pathname + window.location.search);
+				} else {
+					accordionContent.style.display = 'block';
+					title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+					// Update the URL hash when an article is opened
+					window.location.hash = articleId;
+				}
 			});
 		});
+
+		// Open the article corresponding to the URL hash when the page loads
+		window.addEventListener('DOMContentLoaded', () => {
+			const hash = window.location.hash.substring(1);
+			if (hash) {
+				const title = document.querySelector(`#${hash} > .accordion-title`);
+				if (title) {
+					title.click();
+				}
+			}
+		});
+
 	</script>
 </body>
 
