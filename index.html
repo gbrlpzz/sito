@@ -175,9 +175,7 @@
 			} else {
 				content.style.display = 'block';
 				title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				setTimeout(() => {
-    				window.scrollBy(0, -20);
-					}, 300); // Adjust the timeout duration as needed
+				window.scrollBy(0, -40);
 				window.location.hash = title.parentElement.getAttribute('id');
 			}
 
