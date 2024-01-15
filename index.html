@@ -172,10 +172,13 @@
 						// Remove the hash from the URL when an article is closed
 						history.pushState("", document.title, window.location.pathname + window.location.search);
 					} else {
-						accordionContent.style.display = 'block';
-						title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-						// Update the URL hash when an article is opened
-						window.location.hash = articleId;
+						if (accordionContent.style.display === 'block') {
+							// Scroll the title into view
+							title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+							// Adjust scroll position to add space
+							window.scrollBy(0, -20); // Adjust '-20' to increase or decrease the space
+						}
 					}
 				}
 
