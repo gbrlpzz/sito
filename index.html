@@ -27,7 +27,7 @@
 	<style>
 		body {
 			font-family: 'Avenir', Arial, sans-serif;
-			    margin: 40px;
+			    margin: 30px 40px 40px;
 			    padding: 0;
 			    box-sizing: border-box;
 			    color: #333;
@@ -63,7 +63,7 @@
 			font-weight: 600; 
 			color: black;
 			cursor: pointer;
-			padding: 0 0 10px;
+			padding: 10px 0 0;
 			/* Reduced padding to bring titles closer */
 			margin: 0;
 			border: none;
@@ -175,8 +175,10 @@
 			} else {
 				content.style.display = 'block';
 				title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-				window.scrollBy(0, -40);
-				window.location.hash = title.parentElement.getAttribute('id');
+		//		setTimeout(() => {
+    	//			windw.scrollBy(0, -20);
+		//			}, 300); // Adjust the timeout duration as needed
+		//		window.location.hash = title.parentElement.getAttribute('id');
 			}
 
 			// Close other open items
