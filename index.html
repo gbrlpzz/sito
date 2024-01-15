@@ -146,61 +146,58 @@
 	<!-- Your existing JavaScript, plus the new function for loading articles -->
 	<script>
 			document.querySelectorAll('.accordion-title').forEach(title => {
-			title.addEventListener('click', () => {
-				const accordionContent = title.nextElementSibling;
-				const articleId = title.parentElement.getAttribute('id');
+				title.addEventListener('click', () => {
+					const accordionContent = title.nextElementSibling;
+					const articleId = title.parentElement.getAttribute('id');
 
-				// Load article content if not already loaded
-				if (!accordionContent.innerHTML.trim()) {
-					fetch(title.getAttribute('data-article'))
-						.then(response => response.text())
-						.then(data => {
-							accordionContent.innerHTML = data;
-							accordionContent.style.display = 'block';
-							title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-							// Update the URL hash when an article is opened
-							window.location.hash = articleId;
-						})
-						.catch(error => {
-							console.error('Error loading article:', error);
-							accordionContent.innerHTML = '<p>Article could not be loaded.</p>';
-						});
-				} else {
 					// Toggle the clicked item and scroll it into view
 					if (accordionContent.style.display === 'block') {
 						accordionContent.style.display = 'none';
 						// Remove the hash from the URL when an article is closed
 						history.pushState("", document.title, window.location.pathname + window.location.search);
 					} else {
-						if (accordionContent.style.display === 'block') {
-							// Scroll the title into view
+						// Load article content if not already loaded
+						if (!accordionContent.innerHTML.trim()) {
+							fetch(title.getAttribute('data-article'))
+								.then(response => response.text())
+								.then(data => {
+									accordionContent.innerHTML = data;
+									accordionContent.style.display = 'block';
+									title.scrollIntoView({ behavior: 'smooth', block: 'start' });
+									// Update the URL hash when an article is opened
+									window.location.hash = articleId;
+								})
+								.catch(error => {
+									console.error('Error loading article:', error);
+									accordionContent.innerHTML = '<p>Article could not be loaded.</p>';
+								});
+						} else {
+							accordionContent.style.display = 'block';
 							title.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-							// Adjust scroll position to add space
-							window.scrollBy(0, 20); // Adjust '-20' to increase or decrease the space
+							// Update the URL hash when an article is opened
+							window.location.hash = articleId;
 						}
 					}
-				}
 
-				// Close other open items
-				document.querySelectorAll('.accordion-content').forEach(item => {
-					if (item !== accordionContent) {
-						item.style.display = 'none';
-					}
+					// Close other open items
+					document.querySelectorAll('.accordion-content').forEach(item => {
+						if (item !== accordionContent) {
+							item.style.display = 'none';
+						}
+					});
 				});
 			});
-		});
 
-		// Open the article corresponding to the URL hash when the page loads
-		window.addEventListener('DOMContentLoaded', () => {
-			const hash = window.location.hash.substring(1);
-			if (hash) {
-				const title = document.querySelector(`#${hash} > .accordion-title`);
-				if (title) {
-					title.click();
+			// Open the article corresponding to the URL hash when the page loads
+			window.addEventListener('DOMContentLoaded', () => {
+				const hash = window.location.hash.substring(1);
+				if (hash) {
+					const title = document.querySelector(`#${hash} > .accordion-title`);
+					if (title) {
+						title.click();
+					}
 				}
-			}
-		});
+			});
 	</script>
 </body>
 
